@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas"  height=600 width=800></canvas>
+    <input type = "color" id = "picker"/>
+    <script>
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+	  var canvas = document.getElementById("myCanvas");
+	  var ctx = canvas.getContext("2d");
+	  var rect = canvas.getBoundingClientRect();
+	  var picker = document.getElementById("picker");
+	  var color = picker.value;
+	  var isDraw = true;
+
+	  canvas.height = h * 0.8;
+	  canvas.width = w * 0.8;
+
+	  canvas.addEventListener("mousemove", draw, false);
+	  document.addEventListener("keydown",logkey);
+
+	  picker.onchange  = function(){
+	  	color = picker.value
+	  }
+
+	  function logkey(e) {
+	  	console.log(e.code)
+	  	if (e.code == 'KeyB'){
+	  		color = "blue";
+	  	};
+	  	if (e.code == 'KeyR'){
+	  		color = "red";
+	  	};
+	  	if (e.code == 'KeyG'){
+	  		color = "green";
+	  	};
+	  	if (e.code == 'KeyY'){
+	  		color = "yellow";
+	  	};
+	  	if (e.code == 'ArrowUp'){
+	  		isDraw = false;
+	  	};
+	  	if (e.code == 'ArrowDown'){
+	  		isDraw = true;
+	  	};
+	  	if (e.code == 'Space'){
+	  		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	  	};
+	  	
+	  };
+
+	  function draw(e) {
+	  	if (isDraw){
+	  		let x = e.clientX - rect.left - 5;
+			let y = e.clientY - rect.top -5;
+		    ctx.beginPath();
+			ctx.arc(x,y,10,0,2*Math.PI);
+			ctx.fillStyle = color;
+			ctx.fill();
+	  	}
+	  }
+	</script>
+</body>
+</html>
